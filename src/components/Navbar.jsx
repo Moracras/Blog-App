@@ -1,85 +1,208 @@
-import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import Logo from "../assets/Logo.jpg"
+import {flexbox} from "@mui/system"
 
+const pages = ['NEW BLOG', "ABOUT"];
+const settings = [ "Login",'Logout'];
 
+const Navbar =()=> {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-const defaultTheme = createTheme();
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-const Navbar = () => {
-
-
-  
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-    
+    <AppBar position="sticky" sx={{ background:"#4169E1",opacity:0.7, zIndex: (theme) => theme.zIndex.drawer + 1 }} >
+      <Container maxWidth="xl"  >
+        <Toolbar disableGutters  >
+          <Box component={"img"} src={Logo} alt="logo" sx={{ width:"100px", height:"100px", display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+          <Typography
+           zIndex={0}
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: "white",
+              textDecoration: 'none',
+              opacity:1,
+            }}
+          >
+            DASHBOARD
+          </Typography>
+          <Typography
+           zIndex={0}
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              justifyContent:"space",
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              opacity:1,
+            }}
+          >
+            NEWBLOG
+          </Typography>
+          <Typography
+           zIndex={0}
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              flexGrow: 1, display: { xs: 'none', md: 'flex'},
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+              opacity:1,
+            }}
+          >
+            ABOUT
+          </Typography>
 
-      
-      {/* <ReactPlayer
-        
-        url={"https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"}
-        playing
-        object-fit="cover"
-        loop
-        muted
-        width="100%"
-        height="100%"
-        style={{ position: 'absolute', top: 0, left: 0 }}
-      
-        
-      /> */}
-
-      <Container component="main" maxWidth="md" style={{ position: 'relative' }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <Paper
-              elevation={3}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '20px',
-                backdropFilter: 'blur(10px)',  // Saydamlık efekti
-                marginTop: '100px',  // Video yüksekliğine göre ayarlayın
+          <Box sx={{ flexGrow: 1, marginLeft:"auto", display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
               }}
             >
-              <Typography component="h1" variant="h5">
-                Login
-              </Typography>
-            
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper
-              elevation={3}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '20px',
-                backdropFilter: 'blur(10px)',  // Saydamlık efekti
-                marginTop: '100px',  // Video yüksekliğine göre ayarlayın
+              {pages.map((page) => (
+                <MenuItem  key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" >{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+          <Box component={"img"} src={Logo} alt="logo" sx={{ width:"100px", height:"100px", display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box> */}
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
               }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
             >
-              <Typography component="h1" variant="h5">
-                Dashboard
-              </Typography>
-              {/* Dashboard içeriğini ekleyin */}
-              {/* Örneğin: */}
-              {/* <DashboardContent /> */}
-            </Paper>
-          </Grid>
-        </Grid>
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
       </Container>
-    </ThemeProvider>
+    </AppBar>
   );
-};
-
-export default Navbar
+}
+export default Navbar;

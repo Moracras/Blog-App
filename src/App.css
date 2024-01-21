@@ -1,17 +1,22 @@
-video{
+/* video{
     
     z-index: -1;
    
-}
+} */
 
-.bgContainer{
+/* .bgContainer{
     position: absolute;
     top: 50%;
     left: 50%;
     transform:translate(-50%, -50%)
-}
+} */
 
-grid{
-    
+/* input[placeholder]:focus{
+    color:#ffff;
 }
-/* .container */
+input:focus{
+    box-shadow: 0 0 10px #ffff;
+}
+Button:hover{
+    box-shadow: 0 0 10px #ffff;
+} */

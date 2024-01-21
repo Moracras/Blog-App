@@ -3,9 +3,7 @@ import video from "../assets/video/videoBg.mp4"
 import { Box } from '@mui/material'
 
 function BgVideo () {
-    const transformStyles ={
     
-    }
 
     return(
         <Box sx={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)"}} >
