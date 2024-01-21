@@ -1,7 +1,13 @@
+import "./app.css"
+import Navbar from "./components/Navbar"
+import BgVideo from "./components/BgVideo"
+import Login from "./pages/Login"
 function App() {
   return (
     <div>
-      <h1>React App</h1>
+      {/* <BgVideo/> */}
+      <Login/>
+      {/* <Navbar/> */}
     </div>
   )
 }
