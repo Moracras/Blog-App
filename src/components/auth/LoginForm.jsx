@@ -18,6 +18,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+import useAuthCalls from '../../hooks/useAuthCalls';
+import {object, string} from "yup";
 
 
 
@@ -51,12 +53,12 @@ const defaultTheme = createTheme({
   },
 });
 
-export default function LoginForm() {
-    const [showPassword, setShowPassword] = useState(false);
-    const handleTogglePasswordVisibility = () => {
-      setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
+ const LoginForm =() =>{
+    // const [showPassword, setShowPassword] = useState(false);
+    // const handleTogglePasswordVisibility = () => {
+    //   setShowPassword((prevShowPassword) => !prevShowPassword);
+    // };
+  const {login} = useAuthCalls()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -65,18 +67,28 @@ export default function LoginForm() {
       password: data.get('password'),
     });
     
+    const loginSchema = object({
+      
+      email: string().email("Please enter a valid  email").required("This field is required."),
+      password: string()
+      .required("This field is required.")
+      .min(8,"Password must contain at least eight characters.")
+      .max(16,"Password must contain no more than sixteen characters.")
+      .matches(/\d+/,"Password must contain at least one number.")
+      .matches(/[a-z]/,"Password must contain at least one lowercase letter.")
+      .matches(/[A-Z]/,"Password must contain at least one uppercase letter.")
+      .matches(/[@$!%*?&]+/, "Password must contain at least one special character.(@$!%*?&)")
+      
+      
+    })
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" zIndex={0} sx={{height:"100vh",  display:"flex",flexDirection:"column",justifyContent:"center" ,alignItems:"center" , }}>
         
-        <CssBaseline />
-        
-        <BgVideo/>
-          
-         
-        
+        <CssBaseline /> 
+        <BgVideo/>    
         <Grid  
         zIndex={0}
         item  
@@ -94,10 +106,6 @@ export default function LoginForm() {
           color:"#ffffff", 
           addingTop:"60px",
           fontWeight:"3",
-          // marginLeft:"auto",
-          // marginRight:"60px",
-          // maxWidth:600,
-          // maxHeight:480,
           margin:{xs:"auto",sm:"auto",md:"auto"},
           "@media (max-width: 480px)":{
             width:"100%",
@@ -106,14 +114,12 @@ export default function LoginForm() {
           }} xs={12} sm={8} md={5}   elevation={6}  square >
           <Box
           
-            sx={{
-              
+            sx={{  
               my: 8,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              
+              alignItems: 'center', 
             }}
           >
             {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -123,7 +129,22 @@ export default function LoginForm() {
               Sign in
             </Typography>
             <Box component="form" zIndex={0} noValidate onSubmit={handleSubmit} sx={{ objectFit:"cover",  opacity: 0.8, }}>
-              <TextField  sx={{display:"flex", flexDirection:"column", background:"transparent",outline:"none",borderRadius:"30px",boxShadow:"0 0 4px #ffff",transition:"boxShadow 0.5s ease","&:focus":{color:"#ffff"},backgroundColor: 'rgba(255, 255, 255, 0.1)',  opacity: 1,boxSizing:"border-box" }}
+              <TextField  sx={{
+              
+                display:"flex", 
+                flexDirection:"column", 
+                background:"transparent",
+                outline:"none",
+                borderRadius:"30px",
+                boxShadow:"0 0 4px #ffff",
+                transition:"boxShadow 0.5s ease",
+                "&:focus":{
+                  color:"#fff",
+                  borderRadius:30,},
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                   opacity: 1,
+                   boxSizing:"border-box" 
+                  }}
                 margin="normal"
                 required
                 fullWidth
@@ -138,7 +159,8 @@ export default function LoginForm() {
                 },
                }}
                 inputProps={{
-                  style:{color:"white"}
+                  style:{color:"white"},
+                  
                 }}
                 
               />
@@ -151,14 +173,14 @@ export default function LoginForm() {
                 name="password"
                 label="Password"
                 id="password"
-                type={showPassword? "text" : "password"}
+                
                 autoComplete="current-password"
                 inputProps={{
                   style:{color:"white"},
                   endAdornment: (
                     <InputAdornment position="end" >
-                      <IconButton  onClick={handleTogglePasswordVisibility} edge="end" color='inherit'sx={{opacity: 0.8}}>
-                        {showPassword ? <VisibilityOffIcon zIndex={0}  /> : <VisibilityIcon />}
+                      <IconButton   edge="end" color='inherit'sx={{opacity: 0.8}}>
+                        {/* {showPassword ? <VisibilityOffIcon zIndex={0}  /> : <VisibilityIcon />} */}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -205,3 +227,6 @@ export default function LoginForm() {
     </ThemeProvider>
   );
 }
+
+
+export default LoginForm

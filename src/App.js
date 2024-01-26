@@ -1,13 +1,10 @@
 import "./app.css"
-import BgVideo from "./components/BgVideo"
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AppRouter from "./router/AppRouter"
 import Login from "./pages/Login"
 function App() {
   return (
-    <div>
-      {/* <BgVideo/> */}
-      <Login/>
-      {/* <Navbar/> */}
-    </div>
+    
   )
 }
 
